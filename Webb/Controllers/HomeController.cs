@@ -18,12 +18,6 @@ namespace Webb.Controllers
             return View();
         }
 
-        [TokenAuthorize]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -54,6 +48,38 @@ namespace Webb.Controllers
         public IActionResult Movies()
         {
             return View();
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult RegisterNewUser(User user)
+        {
+            if (!ModelState.IsValid)
+                return View("Register");
+
+            var userDto = new UserDto() { Birthdate = user.Birthdate, Email = user.Email, Password = user.Password, Username = user.Username };
+            var cli = new WebClient();
+            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
+            var token = cli.UploadString("https://localhost:44392/api/values", JsonConvert.SerializeObject(userDto));
+            this.Response.Cookies.Append("token", token);
+            return Content("Registered");
+        }
+
+        //[TokenAuthorize]
+        public IActionResult Billing()
+        {
+            return View();
+        }
+
+        public IActionResult CreditCard(CreditCard creditCard)
+        {
+            var cli = new WebClient();
+            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
+            var token = cli.UploadString("https://localhost:44302/api/billing", JsonConvert.SerializeObject(creditCard));
+            return Content(creditCard.CardOwner);
         }
     }
 }

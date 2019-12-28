@@ -1,0 +1,34 @@
+﻿@model Webb.Models.CreditCard
+@{
+    ViewData["Title"] = "Billing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Billing</h1>
+<div style="width: 40%; margin: auto">
+    @using (Html.BeginForm("CreditCard", "Home"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.CardNumber)
+            @Html.TextBoxFor(m => m.CardNumber, null, new { @class = "form-control", maxlength = "16", placeholder = "0000 0000 0000 0000" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CardOwner)
+            @Html.TextBoxFor(m => m.CardOwner, null, new { @class = "form-control", placeholder = "Card Owner" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ExpiryDate)
+            @Html.TextBoxFor(m => m.ExpiryDate, null, new { @class = "form-control", placeholder = "MM / YYYY" })
+            @Html.LabelFor(m => m.CvvNumber)
+            @Html.TextBoxFor(m => m.CvvNumber, null, new { @class = "form-control", placeholder = "CVV" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Save
+        </button>
+    }
+</div>
+
+@section scripts {
+
+}

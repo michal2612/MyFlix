@@ -18,13 +18,23 @@ namespace UsersMS.Controllers
         {
             this.context = context;
         }
-        // GET api/values
+
+        [HttpGet]
+        public IEnumerable<User> ReturnUsers()
+        {
+            return context.Users.ToList();
+        }
+
         [HttpPost]
         public ActionResult<string> Get(UserDto userDto)
         {
-            if (context.Users.SingleOrDefault(c => c.Username == userDto.Username) != null)
-                return "token";
-            return BadRequest();
+            if (context.Users.SingleOrDefault(c => c.Username == userDto.Username) == null)
+            {
+                context.Users.Add(new User() { Birthdate = userDto.Birthdate, email = userDto.Email, Password = userDto.Password, Username = userDto.Username });
+                context.SaveChanges();
+                return userDto.Username;
+            }
+            return "Something went wrong";
         }
     }
 }

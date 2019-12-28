@@ -2,16 +2,18 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">dupa</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Login</h1>
 @using (Html.BeginForm("Submit", "Home"))
 {
+<div class="form-group">
     @Html.LabelFor(m => m.Username)
     @Html.TextBoxFor(m => m.Username, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Username)
+</div>
+<div class="form-group">
     @Html.LabelFor(m => m.Password)
     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-    <input type="submit" value="Login" />
+    @Html.ValidationMessageFor(m => m.Password)
+</div>
+    <input type="submit" value="Login" class="btn btn-primary" />
 }
