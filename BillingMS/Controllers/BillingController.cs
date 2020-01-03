@@ -18,10 +18,17 @@ namespace BillingMS.Controllers
         {
             _context = db;
         }
+        //GET
+        [HttpGet("{id}")]
+        public IEnumerable<CreditCard> CreditCards(int id)
+        {
+            return _context.CreditCards.Where(c => c.UserId == id);
+        }
         //POST
+        [HttpPost]
         public bool AddCreditCard(CreditCard creditCard)
         {
-            _context.CreditCards.Add(new CreditCard() { CardNumber = creditCard.CardNumber, CardOwner = creditCard.CardOwner, CvvNumber = creditCard.CvvNumber, ExpiryDate = creditCard.ExpiryDate });
+            _context.CreditCards.Add(new CreditCard() { CardNumber = creditCard.CardNumber, CardOwner = creditCard.CardOwner, CvvNumber = creditCard.CvvNumber, ExpiryDate = creditCard.ExpiryDate, UserId = creditCard.UserId });
             _context.SaveChanges();
             return true;
         }

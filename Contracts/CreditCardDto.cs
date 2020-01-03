@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Contracts
 {
-    class CreditCardDto
+    public class CreditCardDto
     {
     }
 }

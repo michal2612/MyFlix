@@ -1,26 +1,45 @@
-﻿@model Webb.Models.CreditCard
+﻿@model Webb.ViewModels.UserCreditCards
 @{
     ViewData["Title"] = "Billing";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
 }
 
 <h1>Billing</h1>
+@if (Model.CreditCards.ToList().Count() > 0)
+{
+    <h3>My cards:</h3>
+    <ul>
+        @foreach (var creditCard in Model.CreditCards)
+        {
+            <li>@creditCard.CardNumber</li>
+        }
+    </ul>
+}
+else
+{
+    <h3>You have no saved cards.</h3>
+}
 <div style="width: 40%; margin: auto">
     @using (Html.BeginForm("CreditCard", "Home"))
     {
         <div class="form-group">
-            @Html.LabelFor(m => m.CardNumber)
-            @Html.TextBoxFor(m => m.CardNumber, null, new { @class = "form-control", maxlength = "16", placeholder = "0000 0000 0000 0000" })
+            @Html.LabelFor(m => m.CreditCard.CardNumber)
+            @Html.TextBoxFor(m => m.CreditCard.CardNumber, null, new { @class = "form-control", maxlength = "16", placeholder = "0000 0000 0000 0000" })
+            @Html.ValidationMessageFor(m => m.CreditCard.CardNumber)
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.CardOwner)
-            @Html.TextBoxFor(m => m.CardOwner, null, new { @class = "form-control", placeholder = "Card Owner" })
+            @Html.LabelFor(m => m.CreditCard.CardOwner)
+            @Html.TextBoxFor(m => m.CreditCard.CardOwner, null, new { @class = "form-control", placeholder = "Card Owner" })
+            @Html.ValidationMessageFor(m => m.CreditCard.CardOwner)
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.ExpiryDate)
-            @Html.TextBoxFor(m => m.ExpiryDate, null, new { @class = "form-control", placeholder = "MM / YYYY" })
-            @Html.LabelFor(m => m.CvvNumber)
-            @Html.TextBoxFor(m => m.CvvNumber, null, new { @class = "form-control", placeholder = "CVV" })
+            @Html.LabelFor(m => m.CreditCard.ExpiryDate)
+            @Html.TextBoxFor(m => m.CreditCard.ExpiryDate, null, new { @class = "form-control", placeholder = "MM / YYYY" })
+            @Html.ValidationMessageFor(m => m.CreditCard.ExpiryDate)
+            <br />
+            @Html.LabelFor(m => m.CreditCard.CvvNumber)
+            @Html.TextBoxFor(m => m.CreditCard.CvvNumber, null, new { @class = "form-control", placeholder = "CVV" })
+            @Html.ValidationMessageFor(m => m.CreditCard.CvvNumber)
         </div>
 
         <button type="submit" class="btn btn-primary">
@@ -28,7 +47,3 @@
         </button>
     }
 </div>
-
-@section scripts {
-
-}

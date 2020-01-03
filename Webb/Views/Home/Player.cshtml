@@ -1,0 +1,29 @@
+﻿@model Contracts.MovieDto
+@{
+    ViewData["Title"] = "Player";
+    Layout = "~/Views/Shared/_LayoutPlayer.cshtml";
+}
+<div style="text-align: center">
+    <h1>@Model.Name</h1>
+    <h3>Genre: @Model.GenreName</h3>
+    <h4>Release Date: @Model.ReleasedDate.ToShortDateString()</h4>
+
+    <video id="my-video"
+           class="video-js"
+           controls
+           preload="auto"
+           width="640"
+           height="264"
+           poster="vjs.zencdn.net/v/oceans.png"
+           data-setup="{}">
+        <source src="vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+        <source src="MY_VIDEO.webm" type="video/webm" />
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </video>
+
+    <script src="https://vjs.zencdn.net/7.5.5/video.js"></script>
+</div>

@@ -25,16 +25,22 @@ namespace UsersMS.Controllers
             return context.Users.ToList();
         }
 
+        [HttpGet("{id}")]
+        public User ReturnUser(int id)
+        {
+            return context.Users.SingleOrDefault(c => c.Id == id);
+        }
+
         [HttpPost]
-        public ActionResult<string> Get(UserDto userDto)
+        public ActionResult<int?> Get(UserDto userDto)
         {
             if (context.Users.SingleOrDefault(c => c.Username == userDto.Username) == null)
             {
-                context.Users.Add(new User() { Birthdate = userDto.Birthdate, email = userDto.Email, Password = userDto.Password, Username = userDto.Username });
+                context.Users.Add(new User() { Birthdate = userDto.Birthdate, Email = userDto.Email, Password = userDto.Password, Username = userDto.Username });
                 context.SaveChanges();
-                return userDto.Username;
+                return userDto.Id;
             }
-            return "Something went wrong";
+            return null;
         }
     }
 }

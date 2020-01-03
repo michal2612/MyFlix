@@ -14,7 +14,7 @@ html {
 }
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+	font-size: 16px;
   }
 }
 
@@ -53,4 +53,15 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+}
+.movie-group li {
+	float: left;
+	background-color: darkgray;
+	width: 20%;
+	list-style-type: none;
+	height: 80px;
+	border: 1px solid black;
+	border-radius: 2px;
+	margin-left: 2px;
+	padding-top: 20px;
 }

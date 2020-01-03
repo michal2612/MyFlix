@@ -27,11 +27,11 @@ namespace UsersMS.Migrations
 
                     b.Property<DateTime>("Birthdate");
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("Password");
 
                     b.Property<string>("Username");
-
-                    b.Property<string>("email");
 
                     b.HasKey("Id");
 
