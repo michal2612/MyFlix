@@ -8,12 +8,25 @@
 @if (Model.CreditCards.ToList().Count() > 0)
 {
     <h3>My cards:</h3>
-    <ul>
+    <table class="table table-striped">
+        <tr>
+            <th>Card number</th>
+            <th>Card owner</th>
+            <th>Expiry date</th>
+            <th>Paid</th>
+            <th>Remove</th>
+        </tr>
         @foreach (var creditCard in Model.CreditCards)
         {
-            <li>@creditCard.CardNumber</li>
+            <tr>
+                <td>@creditCard.CardNumber</td>
+                <td>@creditCard.CardOwner</td>
+                <td>@creditCard.ExpiryDate.ToString("MM/yyyy")</td>
+                <td>Paid</td>
+                <td>@Html.ActionLink("Remove", "DeleteCreditCard", "CreditCards", creditCard)</td>
+            </tr>
         }
-    </ul>
+    </table>
 }
 else
 {
@@ -24,7 +37,7 @@ else
     {
         <div class="form-group">
             @Html.LabelFor(m => m.CreditCard.CardNumber)
-            @Html.TextBoxFor(m => m.CreditCard.CardNumber, null, new { @class = "form-control", maxlength = "16", placeholder = "0000 0000 0000 0000" })
+            @Html.TextBoxFor(m => m.CreditCard.CardNumber, null, new { @class = "form-control", placeholder = "0000 0000 0000 0000", type="number" })
             @Html.ValidationMessageFor(m => m.CreditCard.CardNumber)
         </div>
         <div class="form-group">
@@ -38,7 +51,7 @@ else
             @Html.ValidationMessageFor(m => m.CreditCard.ExpiryDate)
             <br />
             @Html.LabelFor(m => m.CreditCard.CvvNumber)
-            @Html.TextBoxFor(m => m.CreditCard.CvvNumber, null, new { @class = "form-control", placeholder = "CVV" })
+            @Html.TextBoxFor(m => m.CreditCard.CvvNumber, null, new { @class = "form-control", placeholder = "CVV", type="number", min="1" })
             @Html.ValidationMessageFor(m => m.CreditCard.CvvNumber)
         </div>
 

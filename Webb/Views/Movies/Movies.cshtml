@@ -4,9 +4,8 @@
     Layout = "~/Views/Shared/_LayoutLogged.cshtml";
 }
 
-<h1>MyFlix Movies</h1>
+<h1>Related movies</h1>
 <div class="text-center">
-    <div style="text-align: left; font-size: 24px;">Recommendation</div>
     @foreach (var genre in Model.Genres)
     {
         <div style="text-align: left; font-size: 24px;">@genre.GenreName</div>
@@ -14,7 +13,7 @@
             @foreach (var movie in Model.Movies.Where(m => m.GenreName == genre.GenreName))
             {
             <li>
-                @Html.ActionLink(movie.Name, "Player", movie)<br/>
+                @Html.ActionLink(movie.Name, "Player", "Home", movie)<br/>
                 <i class="material-icons movie-icon">
                     movie
                 </i>

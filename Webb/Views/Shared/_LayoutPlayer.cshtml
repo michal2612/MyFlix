@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - myFlix Project</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap2.min.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
@@ -19,6 +19,7 @@
 
     <link href="https://vjs.zencdn.net/7.5.5/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
     <header>
@@ -37,6 +38,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Billing">Billing</a>
                         </li>
+                        <form class="form-inline mr-auto">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                            @Html.ActionLink("Search", "SearchResult", "Movies", null, new { @class = "btn btn-dark" })
+                        </form>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log out</a>
                         </li>

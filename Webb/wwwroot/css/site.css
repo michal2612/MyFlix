@@ -55,13 +55,59 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 .movie-group li {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	float: left;
-	background-color: darkgray;
 	width: 20%;
 	list-style-type: none;
 	height: 80px;
-	border: 1px solid black;
 	border-radius: 2px;
-	margin-left: 2px;
+	margin: 2px;
 	padding-top: 20px;
+	background-color: #2AB3D2;
+}
+.movie-group li:hover {
+	background-color: #272B30;
+}
+.field-validation-error {
+	color:red;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+	-moz-appearance: textfield;
+}
+#poster {
+	float: left;
+	padding: 5px;
+}
+.details {
+	float: left;
+}
+h1 {
+	font-size: 60px;
+}
+#voting {
+	margin: 20px;
+}
+.material-icons {
+	font-size: 48px !important;
+}
+.thumb_up:hover {
+	color: green;
+}
+.thumb_down:hover {
+	color:red;
+}
+#results {
+	font-size: x-large;
+}
+.movie-icon {
+	font-size: 26px !important;
+	color: white !important;
 }

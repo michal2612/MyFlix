@@ -3,27 +3,76 @@
     ViewData["Title"] = "Player";
     Layout = "~/Views/Shared/_LayoutPlayer.cshtml";
 }
-<div style="text-align: center">
-    <h1>@Model.Name</h1>
-    <h3>Genre: @Model.GenreName</h3>
-    <h4>Release Date: @Model.ReleasedDate.ToShortDateString()</h4>
+<div class="movie-details">
+    <div id="poster">
+        <img src="https://villagecinema.org/images/thumbnails/images/com_eventbooking/3bills-fill-182x268.jpg" alt="no movie"/>
+    </div>
+    <div class="details">
+        <table class="table table-striped" style="min-width: 400px">
+            <tr>
+                <td><h2>@Model.Name</h2></td>
+            </tr>
+            <tr>
+                <td>Genre: @Model.GenreName - @Html.ActionLink("Look for related movies!", "Related", "Movies", new { genre = Model.GenreName}, new { @style = "color: #2AB3D2" })</td>
+            </tr>
+            <tr>
+                <td>Release Date: @Model.ReleasedDate.ToString(" dd MMMM yyyy")</td>
+            </tr>
+        </table>
+    </div>
+    <div class="details">
+        <div id="voting">
+            <a href="@Url.Action("Vote", "Movies", new Webb.ViewModels.VotedViewModel { IsPositive = "True", MovieId = Model.Id, UserId = Model.UserId })" style="color: #AAAAAA">
+                <i class="material-icons thumb_up" id="thumbUp">thumb_up</i>
+            </a>
+            <a href="@Url.Action("Vote","Movies", new Webb.ViewModels.VotedViewModel { IsPositive = "False", MovieId = Model.Id, UserId = Model.UserId })" style="color: #AAAAAA">
+                <i class="material-icons thumb_down" id="thumbDown">thumb_down</i>
+            </a>
+            <div id="results"></div>
+        </div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div style="background-color: #1B2127">
 
     <video id="my-video"
            class="video-js"
            controls
            preload="auto"
-           width="640"
-           height="264"
-           poster="vjs.zencdn.net/v/oceans.png"
-           data-setup="{}">
-        <source src="vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
-        <source src="MY_VIDEO.webm" type="video/webm" />
+           width="896"
+           height="370"
+           poster="https://whatsondisneyplus.com/wp-content/uploads/2019/11/20th-century-fox-logo.jpg"
+           data-setup="{}"
+           style="margin: auto">
+        <source src="~/Videos/sample.mp4" type="video/mp4" />
+        <source src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm" />
         <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a
             web browser that
             <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
         </p>
     </video>
-
     <script src="https://vjs.zencdn.net/7.5.5/video.js"></script>
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var colourUp = @Model.IsPositive.ToString().ToLower();
+            if (colourUp == true) {
+                var thumb = document.getElementById("thumbUp");
+                thumb.style.color = "green";
+            }
+            else if (colourUp == false) {
+                var thumb = document.getElementById("thumbDown");
+                thumb.style.color = "red";
+            }
+        })
+        $(document).ready(function () {
+            var positiveVotes = @Model.PositiveVotes;
+            var votesInGeneral = @Model.VotesInGeneral;
+
+            document.getElementById("results").innerText = "Positive in: " + (positiveVotes / votesInGeneral) * 100 + "% (" + votesInGeneral + " votes in general)";
+        })
+    </script>
+}
