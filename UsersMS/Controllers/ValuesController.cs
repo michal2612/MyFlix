@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using UsersMS.Models;
 
@@ -32,13 +29,13 @@ namespace UsersMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult<int?> Get(UserDto userDto)
+        public ActionResult<int?> Get(User user)
         {
-            if (context.Users.SingleOrDefault(c => c.Username == userDto.Username) == null)
+            if (context.Users.SingleOrDefault(c => c.Username == user.Username) == null)
             {
-                context.Users.Add(new User() { Birthdate = userDto.Birthdate, Email = userDto.Email, Password = userDto.Password, Username = userDto.Username });
+                context.Users.Add(new User() { Birthdate = user.Birthdate, Email = user.Email, Password = user.Password, Username = user.Username });
                 context.SaveChanges();
-                return userDto.Id;
+                return user.Id;
             }
             return null;
         }

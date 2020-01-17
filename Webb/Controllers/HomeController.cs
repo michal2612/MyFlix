@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Webb.Models;
@@ -12,9 +11,9 @@ namespace Webb.Controllers
 {
     public class HomeController : Controller
     {
-        private string GetLoginPath = "https://localhost:44392/api/";
-        private string GetMovies = "https://localhost:44348/api/";
-        private string GetBillings = "https://localhost:44302/api/billing/";
+        private readonly string GetLoginPath = "https://localhost:44392/api/";
+        private readonly string GetMovies = "https://localhost:44348/api/";
+        private readonly string GetBillings = "https://localhost:44302/api/billing/";
 
         public HomeController()
         {
@@ -41,7 +40,7 @@ namespace Webb.Controllers
 
             var cli = new WebClient();
             cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var token = cli.UploadString(GetLoginPath + "login", JsonConvert.SerializeObject(new UserDto() { Username = user.Username, Password = user.Password }));
+            var token = cli.UploadString(GetLoginPath + "login", JsonConvert.SerializeObject(new User() { Username = user.Username, Password = user.Password }));
             Response.Cookies.Append("token", token);
             return View("IndexLogged");
         }

@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MoviesMicroservice.Models;
+using Ocelot.Middleware;
+using Ocelot.DependencyInjection;
 
-namespace MoviesMicroservice
+namespace GatewayAPI
 {
     public class Startup
     {
@@ -20,13 +20,12 @@ namespace MoviesMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOcelot(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<MoviesContext>(options =>
-    options.UseSqlServer("Data Source=192.168.99.100,1435;Initial Catalog=Movies;User ID=sa;Password=Dupaaaaa.08;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -40,6 +39,7 @@ namespace MoviesMicroservice
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            await app.UseOcelot();
         }
     }
 }

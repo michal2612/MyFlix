@@ -35,12 +35,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Billing">Billing</a>
                         </li>
-                        <li>
-                            <form asp-controller="Movies" asp-action="Search" class="form-inline mr-auto">
-                                <input type="text" placeholder="Search" class="form-control mr-sm-2" name="SearchString" />
-                                <input type="submit" class="btn btn-dark" value="Filter" />
-                            </form>
-                        </li>
+                        <form class="form-inline mr-auto">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                            @Html.ActionLink("Search", "Search", "Movies", null, new { @class = "btn btn-dark" })
+                        </form>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
                         </li>
