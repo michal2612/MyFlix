@@ -54,5 +54,25 @@ namespace Webb.Controllers
 
             return RedirectToAction("Movies", "Home");
         }
+
+        public IActionResult Playlists()
+        {
+            var token = Request.Cookies["token"];
+            var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            var output = JsonConvert.DeserializeObject<Playlist[]>(client.DownloadString($"https://localhost:44321/api/playlists/{token}"));
+
+            return View("Playlists", output);
+        }
+
+        public IActionResult CreatePlaylist()
+        {
+            var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "applcation/json";
+            var movies = JsonConvert.DeserializeObject<List<Movie>>(client.DownloadString("https://localhost:44348/api/movies"));
+
+
+            return View("CreatePlaylist", new CreatePlaylistViewModel() { Movies = movies });
+        }
     }
 }

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Webb.Models.Playlist>
+@{
+    ViewData["Title"] = "Playlists";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
+}
+
+<h1>Playlists</h1>
+@Html.ActionLink("Create a new playlist", "CreatePlaylist", "Movies", null, new { @class = "btn btn-info"})
+@foreach(var playlist in Model)
+{
+    <h2>@playlist.PlaylistName</h2>
+    var movies = playlist.MoviesIds.Split(",");
+    foreach(var movie in movies)
+    {
+        <h3>@movie</h3>
+    }
+}
