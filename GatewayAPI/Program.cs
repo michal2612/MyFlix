@@ -23,6 +23,7 @@ namespace GatewayAPI
                 {
                     config.AddJsonFile("ocelot.json");
                 })
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseUrls("http://*:7000/");
     }
 }

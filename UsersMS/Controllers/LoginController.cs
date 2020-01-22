@@ -19,6 +19,7 @@ namespace UsersMS.Controllers
             _context = db;
         }
 
+        [HttpPost]
         public int? Login(User user)
         {
             var userInDb = _context.Users.Where(c => c.Username == user.Username && c.Password == user.Password);

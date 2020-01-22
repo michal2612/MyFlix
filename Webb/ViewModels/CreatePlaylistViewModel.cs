@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Webb.Models;
 
 namespace Webb.ViewModels
 {
     public class CreatePlaylistViewModel
     {
-        public Playlist Playlist { get; set; }
+        [Display(Name = "Playlist name")]
+        public string PlaylistName { get; set; }
+        public int MovieId { get; set; }
         public List<Movie> Movies { get; set; }
+        public List<int> MovieIds { get; set; }
 
         public CreatePlaylistViewModel()
         {
             Movies = new List<Movie>();
+            MovieIds = new List<int>();
         }
     }
 }

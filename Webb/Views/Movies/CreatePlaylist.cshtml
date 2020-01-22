@@ -3,16 +3,26 @@
     ViewData["Title"] = "CreatePlaylist";
     Layout = "~/Views/Shared/_LayoutLogged.cshtml";
 }
-
 <h1>Create a playlist</h1>
+@if(Model.MovieIds.Count() != 0)
+{
+    foreach(var movie in Model.MovieIds)
+    {
+        <h4>@movie</h4>
+    }
+}
 @using (Html.BeginForm("Create", "Movies"))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Playlist.PlaylistName)
-        @Html.TextBoxFor(m => m.Playlist.PlaylistName, null, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Playlist.PlaylistName)
+        @Html.LabelFor(m => m.PlaylistName)
+        @Html.TextBoxFor(m => m.PlaylistName, null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PlaylistName)
     </div>
     <div class="form-group">
-        @Html.DropDownListFor(m => m.Playlist.MoviesIds, new SelectList(Model.Movies, "Id", "Name"),  "Select a movie to add to playlist", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.MovieId, new SelectList(Model.Movies, "Id", "Name"),  "Select a movie to add to playlist", new { @class = "form-control" })
     </div>
+    @Html.HiddenFor(m => m.MovieIds)
+    <button type="submit" class="btn btn-primary">
+        Add movie
+    </button>
 }

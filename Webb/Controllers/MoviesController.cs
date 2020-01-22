@@ -74,5 +74,16 @@ namespace Webb.Controllers
 
             return View("CreatePlaylist", new CreatePlaylistViewModel() { Movies = movies });
         }
+
+        public IActionResult Create(CreatePlaylistViewModel viewModel)
+        {
+            var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "applcation/json";
+            var movies = JsonConvert.DeserializeObject<List<Movie>>(client.DownloadString("https://localhost:44348/api/movies"));
+            viewModel.Movies = movies;
+
+            viewModel.MovieIds.Add(viewModel.MovieId);
+            return View("CreatePlaylist", viewModel);
+        }
     }
 }

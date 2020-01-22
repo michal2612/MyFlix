@@ -1,18 +1,138 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/values",
+      "DownstreamPathTemplate": "/api/values/{catchAll}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.99.100",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/users/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/login/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/users-login/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/register/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/users-register/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/billing/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7004
+        }
+      ],
+      "UpstreamPathTemplate": "/billing/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/checkuser/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7004
+        }
+      ],
+      "UpstreamPathTemplate": "/billing-checkuser/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/deletecreditcard/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7004
+        }
+      ],
+      "UpstreamPathTemplate": "/billing-deletecreditcard/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/values/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7003
+        }
+      ],
+      "UpstreamPathTemplate": "/movies-values/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/movies",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7003
+        }
+      ],
+      "UpstreamPathTemplate": "/movies"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/genres/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7003
+        }
+      ],
+      "UpstreamPathTemplate": "/movies-genres/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/voting/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
           "Port": 7002
         }
       ],
-      "UpstreamPathTemplate": "/values"
+      "UpstreamPathTemplate": "/voting/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/movies/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/voting-movies/{catchAll}"
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7000"
+    "BaseUrl": "https://192.168.99.100:7000"
   }
 }

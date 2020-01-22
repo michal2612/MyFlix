@@ -38,10 +38,7 @@ namespace Webb.Controllers
             if (user == null)
                 return RedirectToAction("Index", "Home");
 
-            var cli = new WebClient();
-            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var token = cli.UploadString(GetLoginPath + "login", JsonConvert.SerializeObject(new User() { Username = user.Username, Password = user.Password }));
-            Response.Cookies.Append("token", token);
+            Response.Cookies.Append("token", ClassAPI.UserLogin(user));
             return View("IndexLogged");
         }
 

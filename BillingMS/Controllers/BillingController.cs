@@ -28,9 +28,13 @@ namespace BillingMS.Controllers
         [HttpPost]
         public bool AddCreditCard(CreditCard creditCard)
         {
-            _context.CreditCards.Add(new CreditCard() { CardNumber = creditCard.CardNumber, CardOwner = creditCard.CardOwner, CvvNumber = creditCard.CvvNumber, ExpiryDate = creditCard.ExpiryDate, UserId = creditCard.UserId });
-            _context.SaveChanges();
-            return true;
+            if(creditCard != null)
+            {
+                _context.CreditCards.Add(new CreditCard() { CardNumber = creditCard.CardNumber, CardOwner = creditCard.CardOwner, CvvNumber = creditCard.CvvNumber, ExpiryDate = creditCard.ExpiryDate, UserId = creditCard.UserId });
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
