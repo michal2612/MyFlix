@@ -25,7 +25,6 @@ namespace UsersMS.Controllers
             var userInDb = _context.Users.Where(c => c.Username == user.Username && c.Password == user.Password);
             if (userInDb == null)
                 return null;
-
             return userInDb.ToList().First().Id;
         }
     }

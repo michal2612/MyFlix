@@ -11,15 +11,6 @@ namespace Webb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly string GetLoginPath = "https://localhost:44392/api/";
-        private readonly string GetMovies = "https://localhost:44348/api/";
-        private readonly string GetBillings = "https://localhost:44302/api/billing/";
-
-        public HomeController()
-        {
-
-        }
-
         public IActionResult Index()
         {
             if (String.IsNullOrWhiteSpace(Request.Cookies["token"]))
@@ -52,16 +43,10 @@ namespace Webb.Controllers
         public IActionResult Movies()
         {
             var user = Int32.TryParse(Request.Cookies["token"], out int result);
-            var cli = new WebClient();
-            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var output = cli.DownloadString($"https://localhost:44302/api/checkuser/{result}");
-
-            if (result == 0 || bool.Parse(output) == false)
+            if (result == 0 || bool.Parse(ClassAPI.CheckUser(result)) == false)
                 return RedirectToAction("Billing","Home");
 
-            var movies = JsonConvert.DeserializeObject<MovieDto[]>(cli.DownloadString(GetMovies + "movies"));
-            var genres = JsonConvert.DeserializeObject<GenreDto[]>(cli.DownloadString(GetMovies + "genres"));
-            return View(new MoviesViewModel() { Movies = movies, Genres = genres });
+            return View(ClassAPI.MovieViewModel());
         }
 
         [TokenAuthorizeAttributeRedirect]
@@ -75,11 +60,7 @@ namespace Webb.Controllers
             if (!ModelState.IsValid)
                 return View("Register");
 
-            var userDto = new UserDto() { Birthdate = user.Birthdate, Email = user.Email, Password = user.Password, Username = user.Username };
-            var cli = new WebClient();
-            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var token = cli.UploadString(GetLoginPath + "register", JsonConvert.SerializeObject(userDto));
-
+            var token = ClassAPI.RegisterUser(user);
             if (String.IsNullOrWhiteSpace(token))
                 return View("Register");
             Response.Cookies.Append("token", token);
@@ -90,23 +71,16 @@ namespace Webb.Controllers
         [TokenAuthorize]
         public IActionResult Billing()
         {
-            var cli = new WebClient();
-            var result = JsonConvert.DeserializeObject<CreditCard[]>(cli.DownloadString(GetBillings + Request.Cookies["token"]));
-            return View(new UserCreditCards() { CreditCards = result.ToList() });
+            return View(ClassAPI.UserCreditCards(Request.Cookies["token"]));
         }
-
         public IActionResult CreditCard(CreditCard creditCard)
         {
             creditCard.UserId = Convert.ToInt32(Request.Cookies["token"]);
-            var cli = new WebClient();
-            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var cards = JsonConvert.DeserializeObject<CreditCard[]>(cli.DownloadString(GetBillings + creditCard.UserId));
+
             if (!ModelState.IsValid)
                 return RedirectToAction("Billing");
-
-            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var token = cli.UploadString(GetBillings, JsonConvert.SerializeObject(creditCard));
-            var result = JsonConvert.DeserializeObject<CreditCard[]>(cli.DownloadString(GetBillings + creditCard.UserId));
+            else
+                ClassAPI.AddCreditCard(creditCard);
 
             return RedirectToAction("Billing");
         }
@@ -121,25 +95,21 @@ namespace Webb.Controllers
         [TokenAuthorize]
         public IActionResult Player(MovieDto movie)
         {
-            movie.UserId = Convert.ToInt32(Request.Cookies["token"]);
             if(movie.UserId != 0)
             {
-                var address = "https://localhost:44304/api/voting/" + movie.UserId;
-                var cli = new WebClient();
-                cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-
                 try
                 {
-                    var result = JsonConvert.DeserializeObject<MovieDto[]>(cli.DownloadString(address));
+                    var result = ClassAPI.ReturnVoting(Request.Cookies["token"]);
+
                     if(result != null)
                     {
                         var vote = result.Where(c => c.MovieId == movie.Id).SingleOrDefault();
                         if (vote != null)
                             movie.IsPositive = vote.IsPositive;
-                        var voting = JsonConvert.DeserializeObject<MovieDto[]>(cli.DownloadString("https://localhost:44304/api/movies/" + movie.Id));
+                        var voting = ClassAPI.ReturnMoviesVoting(movie.Id);
+
                         movie.VotesInGeneral = voting.Count();
                         movie.PositiveVotes = voting.Where(c => c.IsPositive == true).Count();
-
                     }
                 }
                 catch (Exception)

@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/values/{catchAll}",
+      "DownstreamPathTemplate": "/api/values/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,11 +9,11 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/users/{catchAll}"
+      "UpstreamPathTemplate": "/users/{everything}"
     },
 
     {
-      "DownstreamPathTemplate": "/api/login/{catchAll}",
+      "DownstreamPathTemplate": "/api/login/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -21,7 +21,8 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/users-login/{catchAll}"
+      "UpstreamPathTemplate": "/users-login/{everything}",
+      "UpstreamHttpMethod": [ "Post" ]
     },
 
     {
@@ -118,6 +119,18 @@
         }
       ],
       "UpstreamPathTemplate": "/voting/{catchAll}"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/voting/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/voting-get"
     },
 
     {
