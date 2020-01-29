@@ -21,8 +21,7 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/users-login/{everything}",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamPathTemplate": "/users-login/{everything}"
     },
 
     {

@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using Webb.ViewModels;
@@ -8,7 +10,7 @@ namespace Webb.Models
     public static class ClassAPI
     {
         //PATHS
-        private static readonly string _loginPath = "http://192.168.99.100:7000/users-login/";
+        private static readonly string _loginPath = "http://192.168.99.100:7000/users-login";
         private static readonly string _registerPath = "http://192.168.99.100:7000/users-register/";
         private static readonly string _billingPath = "http://192.168.99.100:7000/billing-checkuser/";
         private static readonly string _billingCardsPath = "http://192.168.99.100:7000/billing/";
@@ -28,7 +30,9 @@ namespace Webb.Models
         //USERS
         public static string UserLogin(User user)
         {
-            return GetWebclient().UploadString(_loginPath, JsonConvert.SerializeObject(new User() { Username = user.Username, Password = user.Password }));
+            var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            return client.UploadString("http://192.168.99.100:7001/api/login", JsonConvert.SerializeObject(new User() { Username = user.Username, Password = user.Password }));
         }
 
         public static string RegisterUser(User user)
@@ -39,7 +43,7 @@ namespace Webb.Models
         //BILLING
         public static string CheckUser(int id)
         {
-            return GetWebclient().DownloadString(_billingPath + id.ToString());
+            return GetWebclient().DownloadString("http://192.168.99.100:7004/api/checkuser/" + id.ToString());
         }
 
         public static UserCreditCards UserCreditCards(string token)
@@ -56,20 +60,30 @@ namespace Webb.Models
         //MOVIES
         public static MoviesViewModel MovieViewModel()
         {
-            var movies = JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString(_moviesPath));
-            var genres = JsonConvert.DeserializeObject<GenreDto[]>(GetWebclient().DownloadString(_genresPath));
+            var movies = JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString("http://192.168.99.100:7003/api/movies"));
+            var genres = JsonConvert.DeserializeObject<GenreDto[]>(GetWebclient().DownloadString("http://192.168.99.100:7003/api/genres"));
             return new MoviesViewModel() { Movies = movies, Genres = genres };
         }
 
-        //MOVIES VOTING
-        public static MovieDto[] ReturnVoting(string movieId)
+        public static MovieDto[] ReturnMovies()
         {
-            return JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString(_moviesVotingPath + movieId));
+            return JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString("http://192.168.99.100:7003/api/movies"));
+        }
+
+        //MOVIES VOTING
+        public static MovieDto[] ReturnVoting(int movieId)
+        {
+            return JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString("http://192.168.99.100:7002/api/movies/" + movieId));
         }
 
         public static MovieDto[] ReturnMoviesVoting(int movieId)
         {
-            return JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString(_votingPath + movieId.ToString()));
+            return JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString("http://192.168.99.100:7002/api/movies/" + movieId.ToString()));
+        }
+
+        public static void Vote(VotedViewModel votedViewModel)
+        {
+            GetWebclient().UploadString("http://192.168.99.100:7002/api/voting/", JsonConvert.SerializeObject(votedViewModel));
         }
     }
 }

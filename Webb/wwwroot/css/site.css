@@ -63,7 +63,7 @@ body {
 	border-radius: 2px;
 	margin: 2px;
 	padding-top: 20px;
-	background-color: #2AB3D2;
+	/*background-color: #2AB3D2;*/
 }
 .movie-group li:hover {
 	background-color: #272B30;

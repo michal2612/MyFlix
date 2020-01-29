@@ -28,9 +28,9 @@ namespace Webb.Controllers
         {
             if (user == null)
                 return RedirectToAction("Index", "Home");
-
             Response.Cookies.Append("token", ClassAPI.UserLogin(user));
-            return View("IndexLogged");
+
+            return RedirectToAction("Movies");
         }
 
         [TokenAuthorizeAttributeRedirect]
@@ -95,27 +95,23 @@ namespace Webb.Controllers
         [TokenAuthorize]
         public IActionResult Player(MovieDto movie)
         {
-            if(movie.UserId != 0)
+            try
             {
-                try
-                {
-                    var result = ClassAPI.ReturnVoting(Request.Cookies["token"]);
+                var result = ClassAPI.ReturnVoting(movie.Id);
 
-                    if(result != null)
-                    {
-                        var vote = result.Where(c => c.MovieId == movie.Id).SingleOrDefault();
-                        if (vote != null)
-                            movie.IsPositive = vote.IsPositive;
-                        var voting = ClassAPI.ReturnMoviesVoting(movie.Id);
-
-                        movie.VotesInGeneral = voting.Count();
-                        movie.PositiveVotes = voting.Where(c => c.IsPositive == true).Count();
-                    }
-                }
-                catch (Exception)
+                if(result != null)
                 {
-                    throw new ArgumentException();
+                    var vote = result.Where(c => c.UserId == Int32.Parse(Request.Cookies["token"])).Single();
+                    if (vote != null)
+                        movie.IsPositive = vote.IsPositive;
+
+                    movie.VotesInGeneral = result.Count();
+                    movie.PositiveVotes = result.Where(c => c.IsPositive == true).Count();
                 }
+            }
+            catch (Exception)
+            {
+                return View(movie);
             }
             return View(movie);
         }

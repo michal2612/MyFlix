@@ -12,7 +12,7 @@
         <ul class="movie-group">
             @foreach (var movie in Model.Movies.Where(m => m.GenreName == genre.GenreName))
             {
-            <li>
+            <li style="background-image: url(../../wwwroot/Posters/@movie.Id)">
                 @Html.ActionLink(movie.Name, "Player", "Home", movie)<br/>
                 <i class="material-icons movie-icon">
                     movie

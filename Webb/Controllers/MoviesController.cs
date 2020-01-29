@@ -11,29 +11,20 @@ namespace Webb.Controllers
 {
     public class MoviesController : Controller
     {
-        private string GetMovies = "https://localhost:44348/api/";
-
         public IActionResult Related(string genre)
         {
             if (genre == null || String.IsNullOrWhiteSpace(genre))
                 return RedirectToAction("Movies", "Home");
 
-            var cli = new WebClient();
-            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var model = new MoviesViewModel() { Movies = JsonConvert.DeserializeObject<MovieDto[]>(cli.DownloadString(GetMovies + "movies")), Genres = new List<GenreDto>() { new GenreDto() { GenreName = genre } } };
-
-            return View("Movies", model);
+            return View("Movies", new MoviesViewModel() { Movies = ClassAPI.ReturnMovies(), Genres = new List<GenreDto>() { new GenreDto() { GenreName = genre } } });
         }
 
         public IActionResult Vote(VotedViewModel viewModel)
         {
             try
             {
-                var address = "https://localhost:44304/api/voting";
-                var cli = new WebClient();
-                cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-                viewModel.OpinionDate = DateTime.Now;
-                cli.UploadString(address, JsonConvert.SerializeObject(viewModel));
+                viewModel.UserId = Int32.Parse(Request.Cookies["token"]);
+                ClassAPI.Vote(viewModel);
             }
             catch (Exception)
             {
