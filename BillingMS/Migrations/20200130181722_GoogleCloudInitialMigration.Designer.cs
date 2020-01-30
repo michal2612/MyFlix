@@ -4,14 +4,16 @@ using BillingMS.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BillingMS.Migrations
 {
     [DbContext(typeof(CreditCardContext))]
-    partial class CreditCardContextModelSnapshot : ModelSnapshot
+    [Migration("20200130181722_GoogleCloudInitialMigration")]
+    partial class GoogleCloudInitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

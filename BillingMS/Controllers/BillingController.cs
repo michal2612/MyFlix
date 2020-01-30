@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BillingMS.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BillingMS.Controllers
@@ -22,7 +19,7 @@ namespace BillingMS.Controllers
         [HttpGet("{id}")]
         public IEnumerable<CreditCard> CreditCards(int id)
         {
-            return _context.CreditCards.Where(c => c.UserId == id);
+            return _context.CreditCardsDb.Where(c => c.UserId == id);
         }
         //POST
         [HttpPost]
@@ -30,7 +27,7 @@ namespace BillingMS.Controllers
         {
             if(creditCard != null)
             {
-                _context.CreditCards.Add(new CreditCard() { CardNumber = creditCard.CardNumber, CardOwner = creditCard.CardOwner, CvvNumber = creditCard.CvvNumber, ExpiryDate = creditCard.ExpiryDate, UserId = creditCard.UserId });
+                _context.CreditCardsDb.Add(new CreditCard() { CardNumber = creditCard.CardNumber, CardOwner = creditCard.CardOwner, CvvNumber = creditCard.CvvNumber, ExpiryDate = creditCard.ExpiryDate, UserId = creditCard.UserId });
                 _context.SaveChanges();
                 return true;
             }

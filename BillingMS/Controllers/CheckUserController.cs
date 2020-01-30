@@ -18,7 +18,7 @@ namespace BillingMS.Controllers
         [HttpGet("{id}")]
         public bool CheckForPayment(int id)
         {
-            var userInDb = _context.CreditCards.Where(c => c.UserId == id);
+            var userInDb = _context.CreditCardsDb.Where(c => c.UserId == id);
             if (userInDb.Count() > 0)
                 return true;
             return false;
