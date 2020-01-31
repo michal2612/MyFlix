@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Webb.Models
+﻿namespace Webb.Models
 {
     public class GenreDto
     {

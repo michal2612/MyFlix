@@ -19,7 +19,7 @@ namespace MoviesMicroservice.Controllers
         public IEnumerable<GenreDto> Genres()
         {
             var genresDto = new List<GenreDto>();
-            foreach (var genre in _context.Genres.ToList())
+            foreach (var genre in _context.GenresDb.ToList())
             {
                 genresDto.Add(new GenreDto() { Id = genre.Id, GenreName = genre.GenreName });
             }

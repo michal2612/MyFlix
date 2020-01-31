@@ -21,7 +21,7 @@ namespace MoviesMicroservice.Controllers
         public IEnumerable<MovieDto> ListOfMovies()
         {
             var movies = new List<MovieDto>();
-            foreach(var movie in _context.Movies.Include(c => c.Genre).ToList())
+            foreach(var movie in _context.MoviesDb.Include(c => c.Genre).ToList())
             {
                 movies.Add(new MovieDto() { GenreName = movie.Genre.GenreName, Id = movie.Id, Name = movie.Name, ReleasedDate = movie.ReleasedDate });
             }

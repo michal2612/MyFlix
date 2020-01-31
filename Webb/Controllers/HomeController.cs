@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Webb.Models;
-using Webb.ViewModels;
 
 namespace Webb.Controllers
 {

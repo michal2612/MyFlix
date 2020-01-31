@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using System;
-using System.ComponentModel.DataAnnotations; 
 
 namespace Webb.Controllers
 {
