@@ -20,7 +20,7 @@ namespace MoviesVotingMicroservice.Controllers
         [HttpGet("{id}")]
         public IEnumerable<MovieOpinion> MovieOpinionById(int? id)
         {
-            return _context.MovieOpinions.Where(c => c.MovieId == id).ToList();
+            return _context.MoviesVoting.Where(c => c.MovieId == id).ToList();
         }
     }
 }

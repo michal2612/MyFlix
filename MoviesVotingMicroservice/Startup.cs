@@ -22,7 +22,7 @@ namespace MoviesVotingMicroservice
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<MovieOpinionContext>(options =>
-    options.UseSqlServer("Data Source=192.168.99.100,1436;Initial Catalog=MoviesVotingDB;User ID=sa;Password=Dupaaaaa.08;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+    options.UseSqlServer("Data Source=35.202.2.227,1433;Initial Catalog=MoviesVoting;User ID=sa;Password=<YourStrong@Passw0rd>;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
