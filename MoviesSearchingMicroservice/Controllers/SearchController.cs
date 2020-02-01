@@ -20,10 +20,10 @@ namespace MoviesSearchingMicroservice.Controllers
         [HttpPost]
         public bool AddRecord(SearchMovie searchMovie)
         {
-            if (searchMovie == null || _context.SearchMovies.Where(c => c.MovieId == searchMovie.MovieId).Count() != 0)
+            if (searchMovie == null || _context.SearchedMovies.Where(c => c.MovieId == searchMovie.MovieId).Count() != 0)
                 return false;
 
-            _context.SearchMovies.Add(searchMovie);
+            _context.SearchedMovies.Add(searchMovie);
             _context.SaveChanges();
             return true;
         }
@@ -36,7 +36,7 @@ namespace MoviesSearchingMicroservice.Controllers
             if (args == null || String.IsNullOrWhiteSpace(args))
                 return result;
 
-            var movies = _context.SearchMovies.ToList();
+            var movies = _context.SearchedMovies.ToList();
             foreach(var key in args.Split(' '))
             {
                 foreach(var movie in movies)
