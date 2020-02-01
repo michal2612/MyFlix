@@ -20,7 +20,7 @@ namespace PlaylistsMicroservice.Controllers
         {
             var playlists = new List<Playlist>();
 
-            foreach(var playlist in _context.Playlists)
+            foreach(var playlist in _context.PlaylistsDb)
             {
                 if (playlist.UserId == id)
                     playlists.Add(playlist);
@@ -33,7 +33,7 @@ namespace PlaylistsMicroservice.Controllers
         {
             if (playlist == null)
                 return false;
-            _context.Playlists.Add(playlist);
+            _context.PlaylistsDb.Add(playlist);
             _context.SaveChanges();
             return true;
         }
