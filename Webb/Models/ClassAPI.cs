@@ -13,7 +13,7 @@ namespace Webb.Models
         private static readonly string _registerPath =     "http://35.202.2.227:7001/api/register/";
         private static readonly string _moviesVotingPath = "http://35.202.2.227:7002/api/movies/";
         private static readonly string _votingPath =       "http://35.202.2.227:7002/api/voting/";
-        private static readonly string _moviesPath =       "http://35.202.2.227:7000/movies/";
+        private static readonly string _moviesPath =       "http://35.202.2.227:7003/api/movies/";
         private static readonly string _genresPath =       "http://35.202.2.227:7003/api/genres/";
         private static readonly string _billingPath =      "http://35.202.2.227:7004/api/checkuser/";
         private static readonly string _billingCardsPath = "http://35.202.2.227:7004/api/billing/";
