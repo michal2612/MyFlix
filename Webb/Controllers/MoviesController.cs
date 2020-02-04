@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Webb.Models;
 using Webb.ViewModels;
 
@@ -28,53 +26,26 @@ namespace Webb.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Player", new MovieDto() { Id = viewModel.MovieId });
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Player", new MovieDto() { Id = viewModel.MovieId });
         }
 
-        public IActionResult Search(string key)
+        public List<GenreDto> lista = new List<GenreDto>() {
+            new GenreDto() {Id = 1, GenreName = "horror"},
+            new GenreDto() {Id = 2, GenreName = "action"}
+        };
+
+        public IActionResult Search()
         {
-            return Content(key);
+            return View(new Search() { Genres = lista });
         }
 
-        public IActionResult SearchResult(int[] movieIds)
+        public IActionResult SearchMovie(Search searchModel)
         {
-            if (movieIds == null || movieIds.Count() == 0)
-                return RedirectToAction("Movies", "Home");
+            var movies = ClassAPI.MovieViewModel();
 
-            return RedirectToAction("Movies", "Home");
-        }
-
-        public IActionResult Playlists()
-        {
-            var token = Request.Cookies["token"];
-            var client = new WebClient();
-            client.Headers[HttpRequestHeader.ContentType] = "application/json";
-            var output = JsonConvert.DeserializeObject<Playlist[]>(client.DownloadString($"https://localhost:44321/api/playlists/{token}"));
-
-            return View("Playlists", output);
-        }
-
-        public IActionResult CreatePlaylist()
-        {
-            var client = new WebClient();
-            client.Headers[HttpRequestHeader.ContentType] = "applcation/json";
-            var movies = JsonConvert.DeserializeObject<List<Movie>>(client.DownloadString("https://localhost:44348/api/movies"));
-
-
-            return View("CreatePlaylist", new CreatePlaylistViewModel() { Movies = movies });
-        }
-
-        public IActionResult Create(CreatePlaylistViewModel viewModel)
-        {
-            var client = new WebClient();
-            client.Headers[HttpRequestHeader.ContentType] = "applcation/json";
-            var movies = JsonConvert.DeserializeObject<List<Movie>>(client.DownloadString("https://localhost:44348/api/movies"));
-            viewModel.Movies = movies;
-
-            viewModel.MovieIds.Add(viewModel.MovieId);
-            return View("CreatePlaylist", viewModel);
+            return View("Movies", new FoundMoviesViewModel() { Movies = movies.Movies, Genres = movies.Genres, FoundMoviesIds = ClassAPI.GetSearchResult(searchModel.Key) });
         }
     }
 }

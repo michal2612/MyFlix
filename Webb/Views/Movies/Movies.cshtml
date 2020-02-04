@@ -1,23 +1,26 @@
-﻿@model Webb.ViewModels.MoviesViewModel
+﻿@model Webb.ViewModels.FoundMoviesViewModel
 @{
     ViewData["Title"] = "Movies";
     Layout = "~/Views/Shared/_LayoutLogged.cshtml";
 }
 
-<h1>Related movies</h1>
+<h1>MyFlix Movies</h1>
 <div class="text-center">
+    <div style="text-align: left; font-size: 24px;"></div>
     @foreach (var genre in Model.Genres)
     {
-        <div style="text-align: left; font-size: 24px;">@genre.GenreName</div>
         <ul class="movie-group">
             @foreach (var movie in Model.Movies.Where(m => m.GenreName == genre.GenreName))
             {
-            <li style="background-image: url(../../wwwroot/Posters/@movie.Id)">
-                @Html.ActionLink(movie.Name, "Player", "Home", movie)<br/>
-                <i class="material-icons movie-icon">
-                    movie
-                </i>
-            </li>
+                if (Model.FoundMoviesIds.Contains(movie.Id))
+                {
+                    <li>
+                        @Html.ActionLink(movie.Name, "Player", "Home", movie)<br />
+                        <i class="material-icons movie-icon">
+                            movie
+                        </i>
+                    </li>
+                }
             }
         </ul>
         <div style="clear:both"></div>

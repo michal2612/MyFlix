@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Webb.ViewModels;
@@ -10,12 +11,13 @@ namespace Webb.Models
         //PATHS
         private static readonly string _loginPath =        "http://35.202.2.227:7001/api/login/";
         private static readonly string _registerPath =     "http://35.202.2.227:7001/api/register/";
-        private static readonly string _billingPath =      "http://35.202.2.227:7004/api/checkuser/";
-        private static readonly string _billingCardsPath = "http://35.202.2.227:7004/api/billing/";
-        private static readonly string _moviesPath =       "http://35.202.2.227:7003/api/movies/";
-        private static readonly string _genresPath =       "http://35.202.2.227:7003/api/genres/";
         private static readonly string _moviesVotingPath = "http://35.202.2.227:7002/api/movies/";
         private static readonly string _votingPath =       "http://35.202.2.227:7002/api/voting/";
+        private static readonly string _moviesPath =       "http://35.202.2.227:7000/movies/";
+        private static readonly string _genresPath =       "http://35.202.2.227:7003/api/genres/";
+        private static readonly string _billingPath =      "http://35.202.2.227:7004/api/checkuser/";
+        private static readonly string _billingCardsPath = "http://35.202.2.227:7004/api/billing/";
+        private static readonly string _searchPath =       "http://35.202.2.227:7006/api/search/";
 
         //WEB CLIENT
         private static WebClient GetWebclient()
@@ -28,9 +30,7 @@ namespace Webb.Models
         //USERS
         public static string UserLogin(User user)
         {
-            var client = new WebClient();
-            client.Headers[HttpRequestHeader.ContentType] = "application/json";
-            return client.UploadString(_loginPath, JsonConvert.SerializeObject(new User() { Username = user.Username, Password = user.Password }));
+            return GetWebclient().UploadString(_loginPath, JsonConvert.SerializeObject(new User() { Username = user.Username, Password = user.Password }));
         }
 
         public static string RegisterUser(User user)
@@ -82,6 +82,16 @@ namespace Webb.Models
         public static void Vote(VotedViewModel votedViewModel)
         {
             GetWebclient().UploadString(_votingPath, JsonConvert.SerializeObject(votedViewModel));
+        }
+
+        public static List<GenreDto> GetGenres()
+        {
+            return JsonConvert.DeserializeObject<List<GenreDto>>(GetWebclient().DownloadString(_genresPath));
+        }
+
+        public static int[] GetSearchResult(string key)
+        {
+            return JsonConvert.DeserializeObject<int[]>(GetWebclient().DownloadString(_searchPath + key));
         }
     }
 }
