@@ -7,7 +7,7 @@ namespace Webb.Models
     {
         public List<GenreDto> Genres { get; set; }
 
-        [Display(Name = "Enter the tile of the movie")]
+        [Display(Name = "Enter the title of the movie")]
         public string Key { get; set; }
 
         public string GenreName { get; set; }

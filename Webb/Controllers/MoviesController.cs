@@ -26,19 +26,14 @@ namespace Webb.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "Player", new MovieDto() { Id = viewModel.MovieId });
+                return RedirectToAction("Player", "Home", new MovieDto() { Id = viewModel.MovieId });
             }
-            return RedirectToAction("Index", "Player", new MovieDto() { Id = viewModel.MovieId });
+            return RedirectToAction("Player", "Home", new MovieDto() { Id = viewModel.MovieId });
         }
-
-        public List<GenreDto> lista = new List<GenreDto>() {
-            new GenreDto() {Id = 1, GenreName = "horror"},
-            new GenreDto() {Id = 2, GenreName = "action"}
-        };
 
         public IActionResult Search()
         {
-            return View(new Search() { Genres = lista });
+            return View(new Search() { Genres = ClassAPI.GetGenres() });
         }
 
         public IActionResult SearchMovie(Search searchModel)

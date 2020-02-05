@@ -92,6 +92,12 @@ namespace Webb.Controllers
         [TokenAuthorize]
         public IActionResult Player(MovieDto movie)
         {
+            if (movie.Name == null)
+            {
+                var movies = ClassAPI.ReturnMovies();
+                movie.Name = movies.ToList().Where(c => c.Id == movie.Id).First().Name;
+            }
+
             try
             {
                 var result = ClassAPI.ReturnVoting(movie.Id);
@@ -106,6 +112,7 @@ namespace Webb.Controllers
                     movie.PositiveVotes = result.Where(c => c.IsPositive == true).Count();
                 }
             }
+                
             catch (Exception)
             {
                 return View(movie);

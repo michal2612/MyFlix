@@ -9,13 +9,13 @@
     <div style="text-align: left; font-size: 24px;"></div>
     @foreach (var genre in Model.Genres)
     {
-        <div style="text-align: left; font-size: 24px;">@genre.GenreName</div>
+        <div style="text-align: left; font-size: 24px; border-radius: 2px">@genre.GenreName</div>
         <ul class="movie-group">
             @foreach (var movie in Model.Movies.Where(m => m.GenreName == genre.GenreName))
             {
-                <li>
+                <li style="border: 2px solid #007bff">
                     @Html.ActionLink(movie.Name, "Player", movie)<br />
-                    <i class="material-icons movie-icon">
+                    <i class="material-icons movie-icon" style="color: black !important">
                         movie
                     </i>
                 </li>

@@ -2,10 +2,11 @@
 @{
     ViewData["Title"] = "Player";
     Layout = "~/Views/Shared/_LayoutPlayer.cshtml";
+    string poster = Model.Id + ".jpg";
 }
 <div class="movie-details">
     <div id="poster">
-        <img src="~/Posters/1.jpg" style="height:300px; width:202px"/>
+        <img src="~/Posters/@poster" style="height:300px; width:202px"/>
     </div>
     <div class="details">
         <table class="table table-striped" style="min-width: 400px">
