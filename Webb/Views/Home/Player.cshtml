@@ -14,7 +14,7 @@
                 <td><h2>@Model.Name</h2></td>
             </tr>
             <tr>
-                <td>Genre: @Model.GenreName - @Html.ActionLink("Look for related movies!", "Related", "Movies", new { genre = Model.GenreName}, new { @style = "color: #2AB3D2" })</td>
+                <td>Genre: @Model.GenreName - @Html.ActionLink("Look for related movies!", "Related", "Home", new { genre = Model.GenreName}, new { @style = "color: #2AB3D2" })</td>
             </tr>
             <tr>
                 <td>Release Date: @Model.ReleasedDate.ToString(" dd MMMM yyyy")</td>

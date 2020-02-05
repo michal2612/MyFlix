@@ -9,13 +9,6 @@ namespace Webb.Controllers
 {
     public class MoviesController : Controller
     {
-        public IActionResult Related(string genre)
-        {
-            if (genre == null || String.IsNullOrWhiteSpace(genre))
-                return RedirectToAction("Movies", "Home");
-
-            return View("Movies", new MoviesViewModel() { Movies = ClassAPI.ReturnMovies(), Genres = new List<GenreDto>() { new GenreDto() { GenreName = genre } } });
-        }
 
         public IActionResult Vote(VotedViewModel viewModel)
         {

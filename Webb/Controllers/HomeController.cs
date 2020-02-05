@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Webb.Models;
+using Webb.ViewModels;
 
 namespace Webb.Controllers
 {
@@ -44,6 +46,14 @@ namespace Webb.Controllers
                 return RedirectToAction("Billing","Home");
 
             return View(ClassAPI.MovieViewModel());
+        }
+
+        public IActionResult Related(string genre)
+        {
+            if (genre == null || String.IsNullOrWhiteSpace(genre))
+                return RedirectToAction("Movies", "Home");
+
+            return View("Movies", new MoviesViewModel() { Movies = ClassAPI.ReturnMovies(), Genres = new List<GenreDto>() { new GenreDto() { GenreName = genre } } });
         }
 
         [TokenAuthorizeAttributeRedirect]
