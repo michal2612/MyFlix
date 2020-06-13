@@ -22,9 +22,7 @@ namespace MoviesMicroservice.Controllers
         {
             var movies = new List<MovieDto>();
             foreach(var movie in _context.MoviesDb.Include(c => c.Genre).ToList())
-            {
                 movies.Add(new MovieDto() { GenreName = movie.Genre.GenreName, Id = movie.Id, Name = movie.Name, ReleasedDate = movie.ReleasedDate });
-            }
             return movies;
         }
     }

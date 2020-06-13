@@ -38,13 +38,9 @@ namespace MoviesSearchingMicroservice.Controllers
 
             var movies = _context.SearchedMovies.ToList();
             foreach(var key in args.Split(' '))
-            {
                 foreach(var movie in movies)
-                {
                     if (movie.MovieName.ToLower().Contains(key) || movie.Tags.Split(',').Contains(key))
                         result.Add(movie.MovieId);
-                }
-            }
             return result;
         }
     }

@@ -9,15 +9,15 @@ namespace Webb.Models
     public static class ClassAPI
     {
         //PATHS
-        private static readonly string _loginPath =        "http://35.202.2.227:7001/api/login/";
-        private static readonly string _registerPath =     "http://35.202.2.227:7001/api/register/";
-        private static readonly string _moviesVotingPath = "http://35.202.2.227:7002/api/movies/";
-        private static readonly string _votingPath =       "http://35.202.2.227:7002/api/voting/";
-        private static readonly string _moviesPath =       "http://35.202.2.227:7003/api/movies/";
-        private static readonly string _genresPath =       "http://35.202.2.227:7003/api/genres/";
-        private static readonly string _billingPath =      "http://35.202.2.227:7004/api/checkuser/";
-        private static readonly string _billingCardsPath = "http://35.202.2.227:7004/api/billing/";
-        private static readonly string _searchPath =       "http://35.202.2.227:7006/api/search/";
+        private static readonly string _loginPath =        $"{ReturnServerIP.ServerIP()}:7001/api/login/";
+        private static readonly string _registerPath =     $"{ReturnServerIP.ServerIP()}:7001/api/register/";
+        private static readonly string _moviesVotingPath = $"{ReturnServerIP.ServerIP()}:7002/api/movies/";
+        private static readonly string _votingPath =       $"{ReturnServerIP.ServerIP()}:7002/api/voting/";
+        private static readonly string _moviesPath =       $"{ReturnServerIP.ServerIP()}:7003/api/movies/";
+        private static readonly string _genresPath =       $"{ReturnServerIP.ServerIP()}:7003/api/genres/";
+        private static readonly string _billingPath =      $"{ReturnServerIP.ServerIP()}:7004/api/checkuser/";
+        private static readonly string _billingCardsPath = $"{ReturnServerIP.ServerIP()}:7004/api/billing/";
+        private static readonly string _searchPath =       $"{ReturnServerIP.ServerIP()}:7006/api/search/";
 
         //WEB CLIENT
         private static WebClient GetWebclient()

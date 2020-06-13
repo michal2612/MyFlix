@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using BillingMS.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BillingMS.Controllers
 {
@@ -22,6 +23,7 @@ namespace BillingMS.Controllers
             var creditCardInDb = _context.CreditCardsDb.Where(m => m.CardNumber == creditCard.CardNumber && m.CardOwner == creditCard.CardOwner && m.UserId == creditCard.UserId).Single();
             if (creditCard == null)
                 return false;
+
             _context.CreditCardsDb.Remove(creditCardInDb);
             _context.SaveChanges();
             return true;

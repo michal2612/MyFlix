@@ -103,10 +103,7 @@ namespace Webb.Controllers
         public IActionResult Player(MovieDto movie)
         {
             if (movie.Name == null)
-            {
-                var movies = ClassAPI.ReturnMovies();
-                movie.Name = movies.ToList().Where(c => c.Id == movie.Id).First().Name;
-            }
+                movie.Name = ClassAPI.ReturnMovies().ToList().Where(c => c.Id == movie.Id).First().Name;
 
             try
             {
@@ -123,10 +120,8 @@ namespace Webb.Controllers
                 }
             }
                 
-            catch (Exception)
-            {
-                return View(movie);
-            }
+            catch (Exception) { return View(movie); }
+                
             return View(movie);
         }
     }
