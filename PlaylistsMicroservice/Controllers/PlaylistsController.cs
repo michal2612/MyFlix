@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PlaylistsMicroservice.Models;
 
 namespace PlaylistsMicroservice.Controllers
@@ -10,10 +11,7 @@ namespace PlaylistsMicroservice.Controllers
     {
         private readonly PlaylistsContext _context;
 
-        public PlaylistsController(PlaylistsContext db)
-        {
-            _context = db;
-        }
+        public PlaylistsController(PlaylistsContext db) => _context = db;
 
         [HttpGet("{id}")]
         public List<Playlist> UsersPlaylists(int id)

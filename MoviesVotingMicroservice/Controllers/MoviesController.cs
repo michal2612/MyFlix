@@ -11,16 +11,10 @@ namespace MoviesVotingMicroservice.Controllers
     {
         private readonly MovieOpinionContext _context;
 
-        public MoviesController(MovieOpinionContext db)
-        {
-            _context = db;
-        }
+        public MoviesController(MovieOpinionContext db) => _context = db;
 
         //GET
         [HttpGet("{id}")]
-        public IEnumerable<MovieOpinion> MovieOpinionById(int? id)
-        {
-            return _context.MoviesVoting.Where(c => c.MovieId == id).ToList();
-        }
+        public IEnumerable<MovieOpinion> MovieOpinionById(int? id) => _context.MoviesVoting.Where(c => c.MovieId == id).ToList();
     }
 }

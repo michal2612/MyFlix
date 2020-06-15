@@ -18,10 +18,7 @@ namespace Webb.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
         public IActionResult Submit(User user)
         {
@@ -33,10 +30,7 @@ namespace Webb.Controllers
         }
 
         [TokenAuthorizeAttributeRedirect]
-        public IActionResult Login()
-        {
-            return View();
-        }
+        public IActionResult Login() => View();
 
         [TokenAuthorize]
         public IActionResult Movies()
@@ -57,10 +51,7 @@ namespace Webb.Controllers
         }
 
         [TokenAuthorizeAttributeRedirect]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        public IActionResult Register() => View();
 
         public IActionResult RegisterNewUser(User user)
         {
@@ -76,10 +67,8 @@ namespace Webb.Controllers
         }
 
         [TokenAuthorize]
-        public IActionResult Billing()
-        {
-            return View(ClassAPI.UserCreditCards(Request.Cookies["token"]));
-        }
+        public IActionResult Billing() => View(ClassAPI.UserCreditCards(Request.Cookies["token"]));
+
         public IActionResult CreditCard(CreditCard creditCard)
         {
             creditCard.UserId = Convert.ToInt32(Request.Cookies["token"]);

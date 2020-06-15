@@ -22,10 +22,7 @@ namespace Webb.Controllers
             return RedirectToAction("Player", "Home", new MovieDto() { Id = viewModel.MovieId });
         }
 
-        public IActionResult Search()
-        {
-            return View(new Search() { Genres = ClassAPI.GetGenres() });
-        }
+        public IActionResult Search() => View(new Search() { Genres = ClassAPI.GetGenres() });
 
         public IActionResult SearchMovie(Search searchModel)
         {

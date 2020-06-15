@@ -17,10 +17,8 @@ namespace BillingMS.Controllers
         }
         //GET
         [HttpGet("{id}")]
-        public IEnumerable<CreditCard> CreditCards(int id)
-        {
-            return _context.CreditCardsDb.Where(c => c.UserId == id);
-        }
+        public IEnumerable<CreditCard> CreditCards(int id) => _context.CreditCardsDb.Where(c => c.UserId == id);
+
         //POST
         [HttpPost]
         public bool AddCreditCard(CreditCard creditCard)

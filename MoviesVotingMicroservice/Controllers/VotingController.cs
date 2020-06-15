@@ -13,22 +13,13 @@ namespace MoviesVotingMicroservice.Controllers
     {
         private readonly MovieOpinionContext _context;
 
-        public VotingController(MovieOpinionContext db)
-        {
-            _context = db;
-        }
+        public VotingController(MovieOpinionContext db) => _context = db;
 
         [HttpGet]
-        public IEnumerable<MovieOpinion> GetAllOpinions()
-        {
-            return _context.MoviesVoting.ToList();
-        }
+        public IEnumerable<MovieOpinion> GetAllOpinions() => _context.MoviesVoting.ToList();
         //GET
         [HttpGet("{id}")]
-        public IEnumerable<MovieOpinion> GetOpinion(int id)
-        {
-            return _context.MoviesVoting.Where(o => o.UserId == id).ToList();
-        }
+        public IEnumerable<MovieOpinion> GetOpinion(int id) => _context.MoviesVoting.Where(o => o.UserId == id).ToList();
         //POST
         [HttpPost]
         public bool AddOpinion(MovieOpinionDto movieOpinionDto)
@@ -37,18 +28,24 @@ namespace MoviesVotingMicroservice.Controllers
                 return false;
             var vote = Convert.ToBoolean(movieOpinionDto.IsPositive);
 
-            if (_context.MoviesVoting.Where(c => c.MovieId == movieOpinionDto.MovieId && c.UserId == movieOpinionDto.UserId).ToList().Count() > 0)
+            try
             {
-                var voteInDb = _context.MoviesVoting.Where(c => c.MovieId == movieOpinionDto.MovieId && c.UserId == movieOpinionDto.UserId).SingleOrDefault();
-                voteInDb.IsPositive = vote;
-                voteInDb.OpinionDate = DateTime.Now;
+                if (_context.MoviesVoting.Where(c => c.MovieId == movieOpinionDto.MovieId && c.UserId == movieOpinionDto.UserId).ToList().Count() > 0)
+                {
+                    var voteInDb = _context.MoviesVoting.Where(c => c.MovieId == movieOpinionDto.MovieId && c.UserId == movieOpinionDto.UserId).SingleOrDefault();
+                    voteInDb.IsPositive = vote;
+                    voteInDb.OpinionDate = DateTime.Now;
+                }
+                else
+                {
+                    var voted = new MovieOpinion() { IsPositive = vote, MovieId = movieOpinionDto.MovieId, OpinionDate = DateTime.Now, UserId = movieOpinionDto.UserId };
+                    _context.MoviesVoting.Add(voted);
+                }
             }
-            else
+            finally
             {
-                var voted = new MovieOpinion() { IsPositive = vote, MovieId = movieOpinionDto.MovieId, OpinionDate = DateTime.Now, UserId = movieOpinionDto.UserId };
-                _context.MoviesVoting.Add(voted);
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
             return true;
         }
     }

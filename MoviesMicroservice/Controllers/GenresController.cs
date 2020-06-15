@@ -11,10 +11,8 @@ namespace MoviesMicroservice.Controllers
     {
         private readonly MoviesContext _context;
 
-        public GenresController(MoviesContext db)
-        {
-            _context = db;
-        }
+        public GenresController(MoviesContext db) => _context = db;
+
         //GET
         public IEnumerable<GenreDto> Genres()
         {

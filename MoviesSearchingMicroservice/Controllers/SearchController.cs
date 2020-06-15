@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MoviesSearchingMicroservice.Models;
 
 namespace MoviesSearchingMicroservice.Controllers
@@ -12,10 +13,7 @@ namespace MoviesSearchingMicroservice.Controllers
     {
         private readonly SearchContext _context;
 
-        public SearchController(SearchContext db)
-        {
-            _context = db;
-        }
+        public SearchController(SearchContext db) => _context = db;
 
         [HttpPost]
         public bool AddRecord(SearchMovie searchMovie)

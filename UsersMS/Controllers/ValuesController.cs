@@ -11,22 +11,13 @@ namespace UsersMS.Controllers
     {
         private readonly UsersContext context;
 
-        public ValuesController(UsersContext context)
-        {
-            this.context = context;
-        }
+        public ValuesController(UsersContext context) => this.context = context;
 
         [HttpGet]
-        public IEnumerable<User> ReturnUsers()
-        {
-            return context.Users.ToList();
-        }
+        public IEnumerable<User> ReturnUsers() => context.Users.ToList();
 
         [HttpGet("{id}")]
-        public User ReturnUser(int id)
-        {
-            return context.Users.SingleOrDefault(c => c.Id == id);
-        }
+        public User ReturnUser(int id) => context.Users.SingleOrDefault(c => c.Id == id);
 
         [HttpPost]
         public ActionResult<int?> Get(User user)

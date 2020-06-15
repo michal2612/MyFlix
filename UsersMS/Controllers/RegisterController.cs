@@ -11,10 +11,7 @@ namespace UsersMS.Controllers
     {
         private readonly UsersContext _context;
 
-        public RegisterController(UsersContext db)
-        {
-            _context = db;
-        }
+        public RegisterController(UsersContext db) => _context = db;
         //POST
         [HttpPost]
         public int? RegisterNewUser(User user)

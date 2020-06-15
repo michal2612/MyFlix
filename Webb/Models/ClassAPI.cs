@@ -39,10 +39,7 @@ namespace Webb.Models
         }
 
         //BILLING
-        public static string CheckUser(int id)
-        {
-            return GetWebclient().DownloadString(_billingPath + id.ToString());
-        }
+        public static string CheckUser(int id) => GetWebclient().DownloadString(_billingPath + id.ToString());
 
         public static UserCreditCards UserCreditCards(string token)
         {
@@ -89,9 +86,6 @@ namespace Webb.Models
             return JsonConvert.DeserializeObject<List<GenreDto>>(GetWebclient().DownloadString(_genresPath));
         }
 
-        public static int[] GetSearchResult(string key)
-        {
-            return JsonConvert.DeserializeObject<int[]>(GetWebclient().DownloadString(_searchPath + key));
-        }
+        public static int[] GetSearchResult(string key) => JsonConvert.DeserializeObject<int[]>(GetWebclient().DownloadString(_searchPath + key));
     }
 }
