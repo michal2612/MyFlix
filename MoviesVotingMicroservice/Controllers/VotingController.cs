@@ -4,6 +4,7 @@ using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using MoviesVotingMicroservice.Models;
 using System;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MoviesVotingMicroservice.Controllers
 {

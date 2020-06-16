@@ -10,10 +10,7 @@ namespace BillingMS.Controllers
     {
         private readonly CreditCardContext _context;
 
-        public CheckUserController(CreditCardContext db)
-        {
-            _context = db;
-        }
+        public CheckUserController(CreditCardContext db) => _context = db;
 
         [HttpGet("{id}")]
         public bool CheckForPayment(int id)

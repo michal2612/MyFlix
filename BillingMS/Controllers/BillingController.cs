@@ -11,10 +11,8 @@ namespace BillingMS.Controllers
     {
         private readonly CreditCardContext _context;
 
-        public BillingController(CreditCardContext db)
-        {
-            _context = db;
-        }
+        public BillingController(CreditCardContext db) => _context = db;
+
         //GET
         [HttpGet("{id}")]
         public IEnumerable<CreditCard> CreditCards(int id) => _context.CreditCardsDb.Where(c => c.UserId == id);

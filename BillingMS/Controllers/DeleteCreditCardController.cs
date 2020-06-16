@@ -11,10 +11,7 @@ namespace BillingMS.Controllers
     {
         private readonly CreditCardContext _context;
 
-        public DeleteCreditCardController(CreditCardContext db)
-        {
-            _context = db;
-        }
+        public DeleteCreditCardController(CreditCardContext db) => _context = db;
 
         //DELETE
         [HttpPost]
