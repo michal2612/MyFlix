@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using BillingMS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillingMS.Controllers
 {
@@ -15,14 +17,14 @@ namespace BillingMS.Controllers
 
         //DELETE
         [HttpPost]
-        public bool DeleteCreditCard(CreditCard creditCard)
+        public async Task<bool> DeleteCreditCard(CreditCard creditCard)
         {
-            var creditCardInDb = _context.CreditCardsDb.Where(m => m.CardNumber == creditCard.CardNumber && m.CardOwner == creditCard.CardOwner && m.UserId == creditCard.UserId).Single();
+            var creditCardInDb = _context.CreditCardsDb.Where(m => m.CardNumber == creditCard.CardNumber && m.CardOwner == creditCard.CardOwner && m.UserId == creditCard.UserId).SingleAsync().Result;
             if (creditCard == null)
                 return false;
 
             _context.CreditCardsDb.Remove(creditCardInDb);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }

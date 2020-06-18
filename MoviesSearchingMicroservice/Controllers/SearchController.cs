@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using MoviesSearchingMicroservice.Models;
 
 namespace MoviesSearchingMicroservice.Controllers
@@ -16,13 +18,13 @@ namespace MoviesSearchingMicroservice.Controllers
         public SearchController(SearchContext db) => _context = db;
 
         [HttpPost]
-        public bool AddRecord(SearchMovie searchMovie)
+        public async Task<bool> AddRecord(SearchMovie searchMovie)
         {
-            if (searchMovie == null || _context.SearchedMovies.Where(c => c.MovieId == searchMovie.MovieId).Count() != 0)
+            if (searchMovie == null || await _context.SearchedMovies.Where(c => c.MovieId == searchMovie.MovieId).CountAsync() != 0)
                 return false;
 
-            _context.SearchedMovies.Add(searchMovie);
-            _context.SaveChanges();
+            await _context.SearchedMovies.AddAsync(searchMovie);
+            await _context.SaveChangesAsync();
             return true;
         }
 

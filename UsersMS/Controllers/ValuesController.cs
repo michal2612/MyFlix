@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UsersMS.Models;
 
 namespace UsersMS.Controllers
@@ -14,18 +16,18 @@ namespace UsersMS.Controllers
         public ValuesController(UsersContext context) => this.context = context;
 
         [HttpGet]
-        public IEnumerable<User> ReturnUsers() => context.Users.ToList();
+        public async Task<IEnumerable<User>> ReturnUsers() => await context.Users.ToListAsync();
 
         [HttpGet("{id}")]
-        public User ReturnUser(int id) => context.Users.SingleOrDefault(c => c.Id == id);
+        public async Task<User> ReturnUser(int id) => await context.Users.SingleOrDefaultAsync(c => c.Id == id);
 
         [HttpPost]
-        public ActionResult<int?> Get(User user)
+        public async Task<ActionResult<int?>> Get(User user)
         {
             if (context.Users.SingleOrDefault(c => c.Username == user.Username) == null)
             {
-                context.Users.Add(new User() { Birthdate = user.Birthdate, Email = user.Email, Password = user.Password, Username = user.Username });
-                context.SaveChanges();
+                await context.Users.AddAsync(new User() { Birthdate = user.Birthdate, Email = user.Email, Password = user.Password, Username = user.Username });
+                await context.SaveChangesAsync();
                 return user.Id;
             }
             return null;

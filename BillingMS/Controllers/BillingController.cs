@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BillingMS.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,12 +20,12 @@ namespace BillingMS.Controllers
 
         //POST
         [HttpPost]
-        public bool AddCreditCard(CreditCard creditCard)
+        public async Task<bool> AddCreditCard(CreditCard creditCard)
         {
             if(creditCard != null)
             {
                 _context.CreditCardsDb.Add(new CreditCard() { CardNumber = creditCard.CardNumber, CardOwner = creditCard.CardOwner, CvvNumber = creditCard.CvvNumber, ExpiryDate = creditCard.ExpiryDate, UserId = creditCard.UserId });
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PlaylistsMicroservice.Models;
@@ -25,13 +26,13 @@ namespace PlaylistsMicroservice.Controllers
         }
 
         [HttpPost]
-        public bool AddPlaylist(Playlist playlist)
+        public async Task<bool> AddPlaylist(Playlist playlist)
         {
             if (playlist == null)
                 return false;
 
             _context.PlaylistsDb.Add(playlist);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }

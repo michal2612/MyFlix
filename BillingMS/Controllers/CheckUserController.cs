@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using BillingMS.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillingMS.Controllers
 {
@@ -13,9 +15,9 @@ namespace BillingMS.Controllers
         public CheckUserController(CreditCardContext db) => _context = db;
 
         [HttpGet("{id}")]
-        public bool CheckForPayment(int id)
+        public async Task<bool> CheckForPayment(int id)
         {
-            if (_context.CreditCardsDb.Where(c => c.UserId == id).Count() > 0)
+            if (await _context.CreditCardsDb.Where(c => c.UserId == id).CountAsync() > 0)
                 return true;
 
             return false;

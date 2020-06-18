@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using MoviesVotingMicroservice.Models;
 using System;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MoviesVotingMicroservice.Controllers
 {
@@ -23,7 +25,7 @@ namespace MoviesVotingMicroservice.Controllers
         public IEnumerable<MovieOpinion> GetOpinion(int id) => _context.MoviesVoting.Where(o => o.UserId == id).ToList();
         //POST
         [HttpPost]
-        public bool AddOpinion(MovieOpinionDto movieOpinionDto)
+        public async Task<bool> AddOpinion(MovieOpinionDto movieOpinionDto)
         {
             if (movieOpinionDto == null)
                 return false;
@@ -33,19 +35,19 @@ namespace MoviesVotingMicroservice.Controllers
             {
                 if (_context.MoviesVoting.Where(c => c.MovieId == movieOpinionDto.MovieId && c.UserId == movieOpinionDto.UserId).ToList().Count() > 0)
                 {
-                    var voteInDb = _context.MoviesVoting.Where(c => c.MovieId == movieOpinionDto.MovieId && c.UserId == movieOpinionDto.UserId).SingleOrDefault();
+                    var voteInDb = await _context.MoviesVoting.Where(c => c.MovieId == movieOpinionDto.MovieId && c.UserId == movieOpinionDto.UserId).SingleOrDefaultAsync();
                     voteInDb.IsPositive = vote;
                     voteInDb.OpinionDate = DateTime.Now;
                 }
                 else
                 {
                     var voted = new MovieOpinion() { IsPositive = vote, MovieId = movieOpinionDto.MovieId, OpinionDate = DateTime.Now, UserId = movieOpinionDto.UserId };
-                    _context.MoviesVoting.Add(voted);
+                    await _context.MoviesVoting.AddAsync(voted);
                 }
             }
             finally
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             return true;
         }
