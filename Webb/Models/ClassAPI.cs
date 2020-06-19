@@ -77,7 +77,7 @@ namespace Webb.Models
             return JsonConvert.DeserializeObject<MovieDto[]>(GetWebclient().DownloadString(_moviesVotingPath + movieId.ToString()));
         }
 
-        public static void Vote(VotedViewModel votedViewModel)
+        public static void Vote(IVotedViewModelInterface votedViewModel)
         {
             GetWebclient().UploadString(_votingPath, JsonConvert.SerializeObject(votedViewModel));
         }

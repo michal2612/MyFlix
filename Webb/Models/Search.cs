@@ -12,9 +12,6 @@ namespace Webb.Models
 
         public string GenreName { get; set; }
 
-        public Search()
-        {
-            Genres = new List<GenreDto>();
-        }
+        public Search() => Genres = new List<GenreDto>();
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using Webb.Interfaces;
 
 namespace Webb.ViewModels
 {
-    public class VotedViewModel
+    public class VotedViewModel : IVotedViewModelInterface
     {
         public int Id { get; set; }
         public int MovieId { get; set; }

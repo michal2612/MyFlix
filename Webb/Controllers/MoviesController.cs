@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Webb.Interfaces;
 using Webb.Models;
 using Webb.ViewModels;
 
@@ -8,7 +9,7 @@ namespace Webb.Controllers
     public class MoviesController : Controller
     {
 
-        public IActionResult Vote(VotedViewModel viewModel)
+        public IActionResult Vote(IVotedViewModelInterface viewModel)
         {
             try
             {
