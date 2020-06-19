@@ -1,8 +1,9 @@
 ﻿using System;
+using Webb.Interfaces;
 
 namespace Webb.Models
 {
-    public class UserDto
+    public class UserDto : IUserModelInterface
     {
         public int Id { get; set; }
         public string Username { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Webb.Interfaces;
 using Webb.Models;
 using Webb.ViewModels;
 
@@ -20,7 +21,7 @@ namespace Webb.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
-        public IActionResult Submit(User user)
+        public IActionResult Submit(IUserModelInterface user)
         {
             if (user == null)
                 return RedirectToAction("Index", "Home");
@@ -53,7 +54,7 @@ namespace Webb.Controllers
         [TokenAuthorizeAttributeRedirect]
         public IActionResult Register() => View();
 
-        public IActionResult RegisterNewUser(User user)
+        public IActionResult RegisterNewUser(IUserModelInterface user)
         {
             if (!ModelState.IsValid)
                 return View("Register");
@@ -89,7 +90,7 @@ namespace Webb.Controllers
         }
 
         [TokenAuthorize]
-        public IActionResult Player(MovieDto movie)
+        public IActionResult Player(IMovieModelInterface movie)
         {
             if (movie.Name == null)
                 movie.Name = ClassAPI.ReturnMovies().ToList().Where(c => c.Id == movie.Id).First().Name;
@@ -109,7 +110,10 @@ namespace Webb.Controllers
                 }
             }
                 
-            catch (Exception) { return View(movie); }
+            catch (Exception)
+            {
+                return View(movie);
+            }
                 
             return View(movie);
         }

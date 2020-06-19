@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Webb.Interfaces;
 using Webb.ViewModels;
 
 namespace Webb.Models
@@ -28,12 +29,12 @@ namespace Webb.Models
         }
 
         //USERS
-        public static string UserLogin(User user)
+        public static string UserLogin(IUserModelInterface user)
         {
             return GetWebclient().UploadString(_loginPath, JsonConvert.SerializeObject(new User() { Username = user.Username, Password = user.Password }));
         }
 
-        public static string RegisterUser(User user)
+        public static string RegisterUser(IUserModelInterface user)
         {
             return GetWebclient().UploadString(_registerPath, JsonConvert.SerializeObject(user));
         }
@@ -47,7 +48,7 @@ namespace Webb.Models
             return new UserCreditCards() { CreditCards = cards.ToList() };
         }
 
-        public static void AddCreditCard(CreditCard creditCard)
+        public static void AddCreditCard(ICreditCardModelInterface creditCard)
         {
             GetWebclient().UploadString(_billingCardsPath, JsonConvert.SerializeObject(creditCard));
         }

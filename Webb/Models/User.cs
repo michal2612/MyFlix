@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Webb.Interfaces;
 
 namespace Webb.Models
 {
-    public class User
+    public class User : IUserModelInterface
     {
         public int Id { get; set; }
         [Required]

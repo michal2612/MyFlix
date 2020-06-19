@@ -1,8 +1,9 @@
 ﻿using System;
+using Webb.Interfaces;
 
 namespace Webb.Models
 {
-    public class MovieDto
+    public class MovieDto : IMovieModelInterface
     {
         public int Id { get; set; }
 

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Webb.Interfaces;
 
 namespace Webb.Models
 {
-    public class CreditCard
+    public class CreditCard : ICreditCardModelInterface
     {
         [Required]
         public int CardNumber { get; set; }
